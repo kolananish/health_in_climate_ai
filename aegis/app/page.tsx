@@ -1,17 +1,17 @@
 'use client';
 
-import React, { useState, useEffect, useCallback } from 'react';
-import { Worker } from '@/types';
-import { generateMockWorkers } from '@/lib/utils';
-import { useSimulation } from '@/lib/simulation';
-import { checkAPIHealth, predictMultipleWorkers } from '@/lib/api';
-import { categorizeError, getErrorToastConfig, logError } from '@/lib/errorHandling';
-import { useToast, ToastContainer } from '@/app/components/Toast';
-import WorkerTable from '@/app/components/WorkerTable';
-import SimulationControls from '@/app/components/SimulationControls';
+import { ConnectionIndicator } from '@/app/components/ConnectionStatus';
 import DataViewModal from '@/app/components/DataViewModal';
 import LoadingSpinner from '@/app/components/LoadingSpinner';
-import { ConnectionIndicator } from '@/app/components/ConnectionStatus';
+import SimulationControls from '@/app/components/SimulationControls';
+import { ToastContainer, useToast } from '@/app/components/Toast';
+import WorkerTable from '@/app/components/WorkerTable';
+import { checkAPIHealth, predictMultipleWorkers } from '@/lib/api';
+import { categorizeError, getErrorToastConfig, logError } from '@/lib/errorHandling';
+import { useSimulation } from '@/lib/simulation';
+import { generateMockWorkers } from '@/lib/utils';
+import { Worker } from '@/types';
+import { useCallback, useEffect, useState } from 'react';
 
 export default function Dashboard() {
   const [workers, setWorkers] = useState<Worker[]>([]);
@@ -305,12 +305,12 @@ export default function Dashboard() {
       <ToastContainer toasts={toasts} onClose={removeToast} />
       
       {/* Header */}
-      <header className="bg-card border-b border-border shadow-sm">
+      <header className="bg-card border-b border-border shadow-sm py-2">
         <div className="container-responsive py-4 sm:py-6">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div className="min-w-0 flex-1">
               <h1 className="text-headline text-foreground">
-                Worker Health Dashboard
+                Aegis AI: Worker Health Dashboard
               </h1>
               <p className="text-caption mt-1">
                 Real-time health monitoring with ML-powered risk assessment
@@ -330,7 +330,7 @@ export default function Dashboard() {
 
       {/* Main Content */}
       <main className="container-responsive py-6 sm:py-8">
-        <div className="space-y-6 sm:space-y-8">
+        <div className="space-y-6 sm:space-y-8 mt-10 mb-12">
           {/* Simulation Controls */}
           <div className="card-elevated">
             <SimulationControls

@@ -44,10 +44,10 @@ export default function SimulationControls({
   // Speed options (in milliseconds) - smooth and fast options
   const speedOptions = [
     { label: 'Ultra Fast', value: 200, description: '0.2s intervals' },
-    { label: 'Very Fast', value: 400, description: '0.4s intervals' },
-    { label: 'Fast', value: 600, description: '0.6s intervals' },
-    { label: 'Normal', value: 1000, description: '1s intervals' },
-    { label: 'Slow', value: 2000, description: '2s intervals' }
+    // { label: 'Very Fast', value: 400, description: '0.4s intervals' },
+    { label: 'Fast', value: 400, description: '0.4s intervals' },
+    { label: 'Normal', value: 700, description: '0.7s intervals' },
+    { label: 'Slow', value: 1000, description: '1s intervals' }
   ];
 
   const currentSpeedOption = speedOptions.find(option => option.value === simulationSpeed) || speedOptions[2];
