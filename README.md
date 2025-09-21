@@ -29,10 +29,10 @@ For example, unmanaged heat stress leads to **productivity losses in the constru
 ---
 
 ## Data Sources
-- [Heat stress impacts workers and the bottom line | Harvard T.H. Chan School of Public Health](https://www.hsph.harvard.edu/)  
+- [Heat stress impacts workers and the bottom line | Harvard T.H. Chan School of Public Health](https://hsph.harvard.edu/environmental-health/news/heat-stress-impacts-workers-and-the-bottom-line/)  
 - [WHO/WMO Guidance to Protect Workers from Increasing Heat Stress](https://www.who.int/news/item/22-08-2025-who-wmo-issue-new-report-and-guidance-to-protect-workers-from-increasing-heat-stress)  
-- [Occupational Heat Stress and Kidney Health: From Farms to Factories - PMC](https://www.ncbi.nlm.nih.gov/pmc/)  
-- [IEEE DataPort: Forecasting Thermal Comfort Sensations for Heatstroke Prevention](https://ieee-dataport.org/)  
+- [Occupational Heat Stress and Kidney Health: From Farms to Factories - PMC](https://pmc.ncbi.nlm.nih.gov/articles/PMC5733743/)  
+- [IEEE DataPort: Forecasting Thermal Comfort Sensations for Heatstroke Prevention](https://ieee-dataport.org/competitions/5th-abc-challenge-forecasting-thermal-comfort-sensations-heatstroke-prevention)  
 
 ---
 
