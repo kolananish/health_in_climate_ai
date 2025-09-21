@@ -207,18 +207,18 @@ export async function predictMultipleWorkers(
  * Checks if the backend API is available
  * @returns Promise resolving to true if API is available, false otherwise
  */
-export async function checkAPIHealth(): Promise<boolean> {
-  try {
-    const response = await Promise.race([
-      fetch(`${API_BASE_URL}/health`, { method: 'GET' }),
-      createTimeoutPromise(5000) // Shorter timeout for health check
-    ]);
-    return response.ok;
-  } catch (error) {
-    console.warn('API health check failed:', error);
-    return false;
-  }
-}
+// export async function checkAPIHealth(): Promise<boolean> {
+//   try {
+//     const response = await Promise.race([
+//       fetch(`${API_BASE_URL}/health`, { method: 'GET' }),
+//       createTimeoutPromise(5000) // Shorter timeout for health check
+//     ]);
+//     return response.ok;
+//   } catch (error) {
+//     console.warn('API health check failed:', error);
+//     return false;
+//   }
+// }
 
 /**
  * Gets the current API configuration
