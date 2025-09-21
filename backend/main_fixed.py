@@ -90,6 +90,10 @@ async def startup_event():
 async def root():
     return {"message": "Thermal Comfort Prediction API", "status": "running"}
 
+@app.post("/test_post")
+async def test_post_check():
+    return {"message":"ok"}
+
 @app.get("/health")
 async def health_check():
     return {"status": "healthy", "model_loaded": model is not None}
