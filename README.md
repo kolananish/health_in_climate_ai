@@ -4,11 +4,23 @@
 ---
 
 ## Install / Run Steps
-in the working folder, run the following commands; 
+- In the working folder, run the following commands for the frontend (React/TypeScript): 
 
-npm install 
-
+```bash
+npm install
+```
+```bash
 npm run dev
+```
+
+- In the working folder, run the following commands for the backend (Python/Flask): 
+
+```bash
+pip install -r requirements.txt
+```
+```bash
+python main.py
+```
 
 ---
 
