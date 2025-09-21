@@ -1,0 +1,64 @@
+Thermal Comfort Model Metadata
+==============================
+Created: 2025-09-20 19:09:40
+Model Type: XGBoost Classifier
+Number of Features: 55
+Target Classes: ['hot', 'neutral', 'slightly warm', 'warm']
+Conservative Bias: 0.15 (default)
+
+Feature List:
+ 1. Gender
+ 2. Age
+ 3. hrv_mean_nni
+ 4. hrv_median_nni
+ 5. hrv_range_nni
+ 6. hrv_sdsd
+ 7. hrv_rmssd
+ 8. hrv_nni_50
+ 9. hrv_pnni_50
+10. hrv_nni_20
+11. hrv_pnni_20
+12. hrv_cvsd
+13. hrv_sdnn
+14. hrv_cvnni
+15. hrv_mean_hr
+16. hrv_min_hr
+17. hrv_max_hr
+18. hrv_std_hr
+19. hrv_total_power
+20. hrv_vlf
+21. hrv_lf
+22. hrv_hf
+23. hrv_lf_hf_ratio
+24. hrv_lfnu
+25. hrv_hfnu
+26. hrv_SD1
+27. hrv_SD2
+28. hrv_SD2SD1
+29. hrv_CSI
+30. hrv_CVI
+31. hrv_CSI_Modified
+32. hrv_mean
+33. hrv_std
+34. hrv_min
+35. hrv_max
+36. hrv_ptp
+37. hrv_sum
+38. hrv_energy
+39. hrv_skewness
+40. hrv_kurtosis
+41. hrv_peaks
+42. hrv_rms
+43. hrv_lineintegral
+44. hrv_n_above_mean
+45. hrv_n_below_mean
+46. hrv_n_sign_changes
+47. hrv_iqr
+48. hrv_iqr_5_95
+49. hrv_pct_5
+50. hrv_pct_95
+51. hrv_entropy
+52. hrv_perm_entropy
+53. hrv_svd_entropy
+54. Temperature
+55. Humidity

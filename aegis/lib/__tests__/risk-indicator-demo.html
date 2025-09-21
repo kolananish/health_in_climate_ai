@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RiskIndicator Component Demo</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f8fafc;
+        }
+        .demo-container {
+            background: white;
+            border-radius: 8px;
+            padding: 24px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        .risk-indicator {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 8px 0;
+        }
+        .indicator-circle {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            border: 2px solid white;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+        .risk-text {
+            font-size: 14px;
+            font-weight: 600;
+            color: #374151;
+        }
+        h1 {
+            color: #1f2937;
+            margin-bottom: 8px;
+        }
+        h2 {
+            color: #374151;
+            margin-top: 24px;
+            margin-bottom: 12px;
+        }
+        .description {
+            color: #6b7280;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-container">
+        <h1>RiskIndicator Component Demo</h1>
+        <p class="description">
+            This demonstrates the color interpolation functionality of the RiskIndicator component.
+            Colors smoothly transition from green (0.0) to red (1.0) based on risk scores.
+        </p>
+        
+        <h2>Risk Score Examples</h2>
+        <div id="risk-indicators"></div>
+        
+        <h2>Smooth Interpolation Demo</h2>
+        <div id="smooth-demo"></div>
+    </div>
+
+    <script>
+        // Color interpolation function (copied from utils.ts)
+        function interpolateColor(color1, color2, factor) {
+            const f = Math.max(0, Math.min(1, factor));
+            
+            const hex1 = color1.replace('#', '');
+            const hex2 = color2.replace('#', '');
+            
+            const r1 = parseInt(hex1.substring(0, 2), 16);
+            const g1 = parseInt(hex1.substring(2, 4), 16);
+            const b1 = parseInt(hex1.substring(4, 6), 16);
+            
+            const r2 = parseInt(hex2.substring(0, 2), 16);
+            const g2 = parseInt(hex2.substring(2, 4), 16);
+            const b2 = parseInt(hex2.substring(4, 6), 16);
+            
+            const r = Math.round(r1 + (r2 - r1) * f);
+            const g = Math.round(g1 + (g2 - g1) * f);
+            const b = Math.round(b1 + (b2 - b1) * f);
+            
+            return `#${r.toString(16).padStart(2, '0')}${g.toString(16).padStart(2, '0')}${b.toString(16).padStart(2, '0')}`;
+        }
+
+        // Risk color function (copied from utils.ts)
+        function getRiskColor(riskScore) {
+            const score = Math.max(0, Math.min(1, riskScore));
+            
+            const colorStops = [
+                { threshold: 0.0, color: '#10B981' },
+                { threshold: 0.25, color: '#84CC16' },
+                { threshold: 0.5, color: '#EAB308' },
+                { threshold: 0.75, color: '#F97316' },
+                { threshold: 1.0, color: '#EF4444' }
+            ];
+            
+            for (let i = 0; i < colorStops.length - 1; i++) {
+                const currentStop = colorStops[i];
+                const nextStop = colorStops[i + 1];
+                
+                if (score >= currentStop.threshold && score <= nextStop.threshold) {
+                    const range = nextStop.threshold - currentStop.threshold;
+                    const factor = range === 0 ? 0 : (score - currentStop.threshold) / range;
+                    return interpolateColor(currentStop.color, nextStop.color, factor);
+                }
+            }
+            
+            return score <= 0.5 ? '#10B981' : '#EF4444';
+        }
+
+        // Create risk indicator HTML
+        function createRiskIndicator(riskScore) {
+            const color = getRiskColor(riskScore);
+            const percentage = (riskScore * 100).toFixed(1);
+            
+            return `
+                <div class="risk-indicator">
+                    <div class="indicator-circle" style="background-color: ${color}"></div>
+                    <span class="risk-text">${percentage}%</span>
+                </div>
+            `;
+        }
+
+        // Render examples
+        const riskIndicatorsContainer = document.getElementById('risk-indicators');
+        const exampleScores = [0.0, 0.1, 0.25, 0.4, 0.5, 0.6, 0.75, 0.9, 1.0];
+        
+        exampleScores.forEach(score => {
+            riskIndicatorsContainer.innerHTML += createRiskIndicator(score);
+        });
+
+        // Render smooth interpolation demo
+        const smoothDemoContainer = document.getElementById('smooth-demo');
+        for (let i = 0; i <= 20; i++) {
+            const score = i / 20; // 0.0 to 1.0 in 0.05 increments
+            smoothDemoContainer.innerHTML += createRiskIndicator(score);
+        }
+    </script>
+</body>
+</html>
