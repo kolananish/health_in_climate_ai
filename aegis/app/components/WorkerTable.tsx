@@ -1,9 +1,9 @@
 'use client';
 
-import React from 'react';
 import { Worker } from '@/types';
-import RiskIndicator from './RiskIndicator';
+import React from 'react';
 import LoadingSpinner from './LoadingSpinner';
+import RiskIndicator from './RiskIndicator';
 
 interface WorkerTableProps {
   workers: Worker[];

@@ -1,7 +1,7 @@
 'use client';
 
-import { SimulationState } from '@/types';
 import { getSimulationProgress } from '@/lib/simulation';
+import { SimulationState } from '@/types';
 
 interface SimulationControlsProps {
   simulationState: SimulationState;
@@ -44,7 +44,6 @@ export default function SimulationControls({
   // Speed options (in milliseconds) - smooth and fast options
   const speedOptions = [
     { label: 'Ultra Fast', value: 200, description: '0.2s intervals' },
-    // { label: 'Very Fast', value: 400, description: '0.4s intervals' },
     { label: 'Fast', value: 400, description: '0.4s intervals' },
     { label: 'Normal', value: 700, description: '0.7s intervals' },
     { label: 'Slow', value: 1000, description: '1s intervals' }
