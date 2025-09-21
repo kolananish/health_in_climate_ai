@@ -4,8 +4,10 @@
 ---
 
 ## Install / Run Steps
-in the working folder, run the following commands;
-npm install
+in the working folder, run the following commands; 
+
+npm install 
+
 npm run dev
 
 ---
