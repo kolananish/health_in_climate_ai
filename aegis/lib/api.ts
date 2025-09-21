@@ -5,7 +5,7 @@ import { workerToFeatureArray } from './utils';
 import { FEATURE_NAMES } from './constants';
 
 // API configuration
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || ' BACKEND_URL';
+const API_BASE_URL = process.env.NEXT_PUBLIC_BACKEND_URL || 'https://a36a70b47eb0.ngrok-free.app';
 const API_TIMEOUT = 10000; // 10 seconds
 const MAX_RETRIES = 3;
 const RETRY_DELAY = 1000; // 1 second
@@ -207,18 +207,18 @@ export async function predictMultipleWorkers(
  * Checks if the backend API is available
  * @returns Promise resolving to true if API is available, false otherwise
  */
-// export async function checkAPIHealth(): Promise<boolean> {
-//   try {
-//     const response = await Promise.race([
-//       fetch(`${API_BASE_URL}/health`, { method: 'GET' }),
-//       createTimeoutPromise(5000) // Shorter timeout for health check
-//     ]);
-//     return response.ok;
-//   } catch (error) {
-//     console.warn('API health check failed:', error);
-//     return false;
-//   }
-// }
+export async function checkAPIHealth(): Promise<boolean> {
+  try {
+    const response = await Promise.race([
+      fetch(`${API_BASE_URL}/health`, { method: 'GET' }),
+      createTimeoutPromise(5000), // Shorter timeout for health check
+    ]);
+    return response.ok;
+  } catch (error) {
+    console.warn('API health check failed:', error);
+    return false;
+  }
+}
 
 /**
  * Gets the current API configuration

@@ -4,13 +4,16 @@ const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch
 async function testAPI() {
   try {
     console.log('Testing API health check...');
-    // const healthResponse = await fetch(' http://localhost:8001/health', {
-    //   method: 'GET',
-    // });
-    // console.log('Health check status:', healthResponse.status, healthResponse.ok);
+    const healthResponse = await fetch(' http://localhost:8001/health', {
+      method: 'GET',
+    });
+    console.log(
+      'Health check status:',
+      healthResponse.status,
+      healthResponse.ok
+    );
 
-    // if (healthResponse.ok) {
-    if (true) {
+    if (healthResponse.ok) {
       console.log('Testing prediction endpoint...');
 
       // Sample worker data
