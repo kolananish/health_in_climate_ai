@@ -45,7 +45,7 @@ def start_server():
         
         # Check if server is running
         try:
-            response = requests.get('http://localhost:8000/docs', timeout=5)
+            response = requests.get(' BACKEND_URL/docs', timeout=5)
             if response.status_code == 200:
                 print("✅ Backend server started successfully!")
                 return process
@@ -123,7 +123,7 @@ def test_prediction():
     }
     
     try:
-        response = requests.post('http://localhost:8000/predict', 
+        response = requests.post(' BACKEND_URL/predict', 
                                json=test_data, 
                                timeout=10)
         

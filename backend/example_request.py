@@ -11,7 +11,7 @@ example_features = {
 }
 
 def test_prediction():
-    response = requests.post("http://localhost:8000/predict", json=example_features)
+    response = requests.post("BACKEND_URL/predict", json=example_features)
     if response.status_code == 200:
         result = response.json()
         print(f"Risk Score: {result['risk_score']}")

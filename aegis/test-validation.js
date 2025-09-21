@@ -31,7 +31,7 @@ class ValidationTester {
     
     try {
       // Test backend health/docs endpoint
-      const docsResponse = await fetch('http://localhost:8000/docs');
+      const docsResponse = await fetch(' BACKEND_URL/docs');
       await this.assert(docsResponse.ok, 'Backend server is accessible');
       
       // Test prediction endpoint with comprehensive data
@@ -93,10 +93,10 @@ class ValidationTester {
         humidity: 65.0
       };
       
-      const predictionResponse = await fetch('http://localhost:8000/predict', {
+      const predictionResponse = await fetch(' BACKEND_URL/predict', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(testWorkerData)
+        body: JSON.stringify(testWorkerData),
       });
       
       await this.assert(predictionResponse.ok, 'Backend prediction endpoint responds');
@@ -125,10 +125,10 @@ class ValidationTester {
       
       // Test with different temperature/humidity values to verify risk changes
       const hotTestData = { ...testWorkerData, temperature: 35.0, humidity: 85.0 };
-      const hotResponse = await fetch('http://localhost:8000/predict', {
+      const hotResponse = await fetch(' BACKEND_URL/predict', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(hotTestData)
+        body: JSON.stringify(hotTestData),
       });
       
       const hotPrediction = await hotResponse.json();

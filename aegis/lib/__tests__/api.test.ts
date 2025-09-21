@@ -32,25 +32,25 @@ describe('API Service', () => {
       const mockResponse = {
         risk_score: 0.75,
         predicted_class: 'warm',
-        confidence: 0.85
+        confidence: 0.85,
       };
 
       (fetch as jest.Mock).mockResolvedValueOnce({
         ok: true,
         json: async () => mockResponse,
         status: 200,
-        statusText: 'OK'
+        statusText: 'OK',
       });
 
       const result = await predictWorkerRisk(mockWorker);
 
       expect(result).toEqual(mockResponse);
       expect(fetch).toHaveBeenCalledWith(
-        'http://localhost:8000/predict',
+        ' BACKEND_URL/predict',
         expect.objectContaining({
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: expect.any(String)
+          body: expect.any(String),
         })
       );
     });
@@ -60,7 +60,7 @@ describe('API Service', () => {
         ok: false,
         status: 500,
         statusText: 'Internal Server Error',
-        text: async () => 'Server error'
+        text: async () => 'Server error',
       });
 
       await expect(predictWorkerRisk(mockWorker)).rejects.toThrow(APIError);
@@ -74,14 +74,14 @@ describe('API Service', () => {
 
     it('should handle timeout errors', async () => {
       (fetch as jest.Mock).mockImplementationOnce(
-        () => new Promise(resolve => setTimeout(resolve, 15000))
+        () => new Promise((resolve) => setTimeout(resolve, 15000))
       );
 
       const promise = predictWorkerRisk(mockWorker);
-      
+
       // Fast-forward time to trigger timeout
       jest.advanceTimersByTime(10000);
-      
+
       await expect(promise).rejects.toThrow(TimeoutError);
     });
 
@@ -91,24 +91,24 @@ describe('API Service', () => {
           ok: false,
           status: 503,
           statusText: 'Service Unavailable',
-          text: async () => 'Service unavailable'
+          text: async () => 'Service unavailable',
         })
         .mockResolvedValueOnce({
           ok: true,
           json: async () => ({
             risk_score: 0.5,
             predicted_class: 'neutral',
-            confidence: 0.9
-          })
+            confidence: 0.9,
+          }),
         });
 
       const promise = predictWorkerRisk(mockWorker);
-      
+
       // Fast-forward time for retry delay
       jest.advanceTimersByTime(1000);
-      
+
       const result = await promise;
-      
+
       expect(result.risk_score).toBe(0.5);
       expect(fetch).toHaveBeenCalledTimes(2);
     });
@@ -117,7 +117,7 @@ describe('API Service', () => {
       (fetch as jest.Mock).mockResolvedValueOnce({
         ok: true,
         json: async () => ({ invalid: 'response' }),
-        status: 200
+        status: 200,
       });
 
       await expect(predictWorkerRisk(mockWorker)).rejects.toThrow(APIError);
@@ -128,7 +128,7 @@ describe('API Service', () => {
     it('should handle multiple workers successfully', async () => {
       const workers = [
         generateWorkerData('Worker 1', 'w1'),
-        generateWorkerData('Worker 2', 'w2')
+        generateWorkerData('Worker 2', 'w2'),
       ];
 
       (fetch as jest.Mock)
@@ -137,16 +137,16 @@ describe('API Service', () => {
           json: async () => ({
             risk_score: 0.3,
             predicted_class: 'neutral',
-            confidence: 0.8
-          })
+            confidence: 0.8,
+          }),
         })
         .mockResolvedValueOnce({
           ok: true,
           json: async () => ({
             risk_score: 0.7,
             predicted_class: 'warm',
-            confidence: 0.9
-          })
+            confidence: 0.9,
+          }),
         });
 
       const results = await predictMultipleWorkers(workers);
@@ -161,7 +161,7 @@ describe('API Service', () => {
     it('should handle mixed success and failure', async () => {
       const workers = [
         generateWorkerData('Worker 1', 'w1'),
-        generateWorkerData('Worker 2', 'w2')
+        generateWorkerData('Worker 2', 'w2'),
       ];
 
       (fetch as jest.Mock)
@@ -170,8 +170,8 @@ describe('API Service', () => {
           json: async () => ({
             risk_score: 0.3,
             predicted_class: 'neutral',
-            confidence: 0.8
-          })
+            confidence: 0.8,
+          }),
         })
         .mockRejectedValueOnce(new TypeError('fetch failed'));
 
@@ -188,21 +188,20 @@ describe('API Service', () => {
   describe('checkAPIHealth', () => {
     it('should return true when API is healthy', async () => {
       (fetch as jest.Mock).mockResolvedValueOnce({
-        ok: true
+        ok: true,
       });
 
       const isHealthy = await checkAPIHealth();
 
       expect(isHealthy).toBe(true);
-      expect(fetch).toHaveBeenCalledWith(
-        'http://localhost:8000/docs',
-        { method: 'HEAD' }
-      );
+      expect(fetch).toHaveBeenCalledWith(' BACKEND_URL/docs', {
+        method: 'HEAD',
+      });
     });
 
     it('should return false when API is unhealthy', async () => {
       (fetch as jest.Mock).mockResolvedValueOnce({
-        ok: false
+        ok: false,
       });
 
       const isHealthy = await checkAPIHealth();
@@ -224,10 +223,10 @@ describe('API Service', () => {
       const config = getAPIConfig();
 
       expect(config).toEqual({
-        baseUrl: 'http://localhost:8000',
+        baseUrl: ' BACKEND_URL',
         timeout: 10000,
         maxRetries: 3,
-        retryDelay: 1000
+        retryDelay: 1000,
       });
     });
   });

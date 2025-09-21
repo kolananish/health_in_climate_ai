@@ -5,7 +5,7 @@ import { workerToFeatureArray } from './utils';
 import { FEATURE_NAMES } from './constants';
 
 // API configuration
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || ' BACKEND_URL';
 const API_TIMEOUT = 10000; // 10 seconds
 const MAX_RETRIES = 3;
 const RETRY_DELAY = 1000; // 1 second

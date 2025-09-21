@@ -9,7 +9,7 @@ async function testBackendIntegration() {
   try {
     // Test health check
     console.log('🏥 Testing API health...');
-    const healthResponse = await fetch('http://localhost:8000/docs', { method: 'HEAD' });
+    const healthResponse = await fetch(' BACKEND_URL/docs', { method: 'HEAD' });
     console.log(`  Status: ${healthResponse.status} ${healthResponse.statusText}`);
     
     if (!healthResponse.ok) {
@@ -80,12 +80,12 @@ async function testBackendIntegration() {
       "svd_entropy": 0.5
     };
     
-    const predictionResponse = await fetch('http://localhost:8000/predict', {
+    const predictionResponse = await fetch(' BACKEND_URL/predict', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(testData)
+      body: JSON.stringify(testData),
     });
     
     console.log(`  Status: ${predictionResponse.status} ${predictionResponse.statusText}`);
@@ -118,7 +118,7 @@ async function testBackendIntegration() {
   } catch (error) {
     console.log(`❌ Test failed: ${error.message}`);
     if (error.code === 'ECONNREFUSED') {
-      console.log('💡 Make sure the backend server is running on http://localhost:8000');
+      console.log('💡 Make sure the backend server is running on  BACKEND_URL');
     }
   }
 }

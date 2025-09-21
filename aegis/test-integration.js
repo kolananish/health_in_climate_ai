@@ -9,11 +9,11 @@ const path = require('path');
 
 // Test configuration
 const TEST_CONFIG = {
-  baseUrl: 'http://localhost:3000',
-  backendUrl: 'http://localhost:8000',
+  baseUrl: ' BACKEND_URL',
+  backendUrl: ' BACKEND_URL',
   timeout: 30000,
   simulationDuration: 10000, // 10 seconds for testing
-  colorTolerance: 10 // RGB color tolerance for validation
+  colorTolerance: 10, // RGB color tolerance for validation
 };
 
 // Expected color ranges for risk scores
