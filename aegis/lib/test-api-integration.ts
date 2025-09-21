@@ -81,10 +81,7 @@ async function testErrorHandling() {
   
   try {
     // Test with invalid worker data (missing required fields)
-    const invalidWorker = {
-      id: 'invalid',
-      name: 'Invalid Worker'
-    } as unknown as Worker;
+    const invalidWorker = null as any;
     
     console.log('  Testing with invalid worker data...');
     await predictWorkerRisk(invalidWorker);

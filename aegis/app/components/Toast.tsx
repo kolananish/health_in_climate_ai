@@ -36,7 +36,7 @@ function Toast({ toast, onClose }: ToastProps) {
       }, toast.duration);
       return () => clearTimeout(timer);
     }
-  }, [toast.duration, handleClose]);
+  }, [toast.duration]);
 
   const handleClose = () => {
     setIsExiting(true);
