@@ -84,7 +84,7 @@ async function testErrorHandling() {
     const invalidWorker = {
       id: 'invalid',
       name: 'Invalid Worker'
-    } as any;
+    } as unknown as Worker;
     
     console.log('  Testing with invalid worker data...');
     await predictWorkerRisk(invalidWorker);

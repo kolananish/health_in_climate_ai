@@ -14,11 +14,11 @@ jest.mock('../api', () => ({
 }));
 
 describe('Simulation Engine', () => {
-  let mockWorkers: Worker[];
+  let _mockWorkers: Worker[];
 
   beforeEach(() => {
     // Create mock workers including John Doe
-    mockWorkers = [
+    _mockWorkers = [
       generateWorkerWithRiskProfile('John Doe', 'worker-001', 'moderate'),
       generateWorkerWithRiskProfile('Sarah Johnson', 'worker-002', 'low')
     ];

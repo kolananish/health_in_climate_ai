@@ -1,7 +1,7 @@
 // Utility functions for Worker Health Dashboard
 
 import { Worker } from '@/types';
-import { FEATURE_RANGES, WORKER_NAMES, RISK_COLORS, RISK_COLOR_THRESHOLDS } from './constants';
+import { FEATURE_RANGES, WORKER_NAMES, RISK_COLORS } from './constants';
 
 /**
  * Maps a risk score (0.0 - 1.0) to a color value using smooth interpolation

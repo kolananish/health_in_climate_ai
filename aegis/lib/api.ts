@@ -120,7 +120,7 @@ async function makePredictionRequest(worker: Worker): Promise<PredictionResponse
   
   // Check if response is ok
   if (!response.ok) {
-    const errorText = await response.text().catch(() => 'Unknown error');
+    const _errorText = await response.text().catch(() => 'Unknown error');
     throw new APIError(
       `API request failed: ${response.status} ${response.statusText}`,
       response.status,
@@ -132,7 +132,7 @@ async function makePredictionRequest(worker: Worker): Promise<PredictionResponse
   let jsonResponse;
   try {
     jsonResponse = await response.json();
-  } catch (error) {
+  } catch (_error) {
     throw new APIError('Invalid JSON response from API', response.status, 'INVALID_JSON');
   }
   

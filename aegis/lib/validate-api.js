@@ -1,8 +1,8 @@
 // Simple validation script for API service
 // Run with: node lib/validate-api.js
 
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
 
 console.log('🧪 Validating Worker Health Dashboard API Service\n');
 

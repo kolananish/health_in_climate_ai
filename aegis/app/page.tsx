@@ -117,7 +117,7 @@ export default function Dashboard() {
     };
 
     initializeDashboard();
-  }, []); // Empty dependency array - only run once on mount
+  }, [handleDashboardError, showError, showInfo, showSuccess, showWarning]); // Dependencies for functions used inside useEffect
 
   // Handle worker updates from simulation with error handling
   const handleWorkerUpdate = useCallback((workerId: string, updates: Partial<Worker>) => {

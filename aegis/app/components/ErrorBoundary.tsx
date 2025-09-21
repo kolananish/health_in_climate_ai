@@ -171,7 +171,7 @@ export default class ErrorBoundary extends Component<Props, State> {
  * Hook version of error boundary for functional components
  */
 export function useErrorHandler() {
-  const handleError = (error: Error, context?: Record<string, any>) => {
+  const handleError = (error: Error, context?: Record<string, unknown>) => {
     const errorInfo = categorizeError(error, {
       ...context,
       source: 'error_handler_hook'

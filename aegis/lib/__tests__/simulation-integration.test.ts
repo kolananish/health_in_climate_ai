@@ -14,7 +14,7 @@ jest.mock('../api', () => ({
 
 describe('Simulation Engine Integration', () => {
   let mockWorkers: Worker[];
-  let mockOnWorkerUpdate: jest.Mock;
+  let _mockOnWorkerUpdate: jest.Mock;
 
   beforeEach(() => {
     // Create mock workers including John Doe
@@ -23,7 +23,7 @@ describe('Simulation Engine Integration', () => {
       generateWorkerWithRiskProfile('Sarah Johnson', 'worker-002', 'low')
     ];
     
-    mockOnWorkerUpdate = jest.fn();
+    _mockOnWorkerUpdate = jest.fn();
   });
 
   it('should import simulation module without errors', async () => {
