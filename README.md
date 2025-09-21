@@ -1,7 +1,4 @@
-# Health In Climate AI Hackathon
-# Aegis AI
-
----
+# Health In Climate AI Hackathon (Aegis AI)
 
 ## Install / Run Steps
 - In the working folder, run the following commands for the frontend (React/TypeScript): 
