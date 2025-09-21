@@ -8,12 +8,12 @@ import { categorizeError, logError } from './errorHandling';
 
 // Default simulation configuration constants
 const DEFAULT_SIMULATION_INTERVAL = 500; // 500ms for smooth updates
-const TEMPERATURE_INCREMENT = 0.8; // Smaller, smoother increments
-const HUMIDITY_INCREMENT = 2.5; // Smaller, smoother increments
-const MAX_TEMPERATURE = 38; // Maximum temperature for heat up
-const MIN_TEMPERATURE = 20; // Minimum temperature for cool down
-const MAX_HUMIDITY = 85; // Maximum humidity for heat up
-const MIN_HUMIDITY = 35; // Minimum humidity for cool down
+const TEMPERATURE_INCREMENT = 1.2; // Slightly larger increments for better visibility
+const HUMIDITY_INCREMENT = 3.5; // Slightly larger increments for better visibility
+const MAX_TEMPERATURE = 34; // Maximum temperature for heat up
+const MIN_TEMPERATURE = 10; // Minimum temperature for cool down
+const MAX_HUMIDITY = 90; // Maximum humidity for heat up
+const MIN_HUMIDITY = 20; // Minimum humidity for cool down
 
 // Heart rate variability changes during stress
 const HRV_STRESS_FACTOR = 0.95; // Multiply HRV by this during heat up (stress reduces HRV)
@@ -112,32 +112,52 @@ export function useSimulation(
     const currentMeanHR = currentWorker.hrv_mean_hr;
     const currentRMSSD = currentWorker.hrv_rmssd;
     const currentSDNN = currentWorker.hrv_sdnn;
+    const currentMeanNNI = currentWorker.hrv_mean_nni;
+    const currentPNN50 = currentWorker.hrv_pnni_50;
+    const currentTotalPower = currentWorker.hrv_total_power;
+    const currentLF = currentWorker.hrv_lf;
+    const currentHF = currentWorker.hrv_hf;
 
     let newTemp = currentTemp;
     let newHumidity = currentHumidity;
     let newMeanHR = currentMeanHR;
     let newRMSSD = currentRMSSD;
     let newSDNN = currentSDNN;
+    let newMeanNNI = currentMeanNNI;
+    let newPNN50 = currentPNN50;
+    let newTotalPower = currentTotalPower;
+    let newLF = currentLF;
+    let newHF = currentHF;
 
     if (simulationType === 'heatup') {
       // Environmental stress increases
       newTemp = Math.min(MAX_TEMPERATURE, currentTemp + TEMPERATURE_INCREMENT);
       newHumidity = Math.min(MAX_HUMIDITY, currentHumidity + HUMIDITY_INCREMENT);
-      
+
       // Physiological stress responses
       newMeanHR = Math.min(110, currentMeanHR + HEART_RATE_STRESS_INCREMENT); // Heart rate increases
       newRMSSD = Math.max(15, currentRMSSD * HRV_STRESS_FACTOR); // HRV decreases (stress)
       newSDNN = Math.max(20, currentSDNN * HRV_STRESS_FACTOR); // HRV decreases (stress)
-      
+      newMeanNNI = Math.max(500, currentMeanNNI * 0.96); // NNI intervals decrease (faster heart rate)
+      newPNN50 = Math.max(5, currentPNN50 * 0.92); // pNN50 decreases under stress
+      newTotalPower = Math.max(800, currentTotalPower * 0.94); // Total HRV power decreases
+      newLF = Math.max(200, currentLF * 0.93); // Low frequency power decreases
+      newHF = Math.max(100, currentHF * 0.90); // High frequency power decreases more (parasympathetic withdrawal)
+
     } else if (simulationType === 'cooldown') {
       // Environmental stress decreases
       newTemp = Math.max(MIN_TEMPERATURE, currentTemp - TEMPERATURE_INCREMENT);
       newHumidity = Math.max(MIN_HUMIDITY, currentHumidity - HUMIDITY_INCREMENT);
-      
-      // Physiological recovery responses
-      newMeanHR = Math.max(55, currentMeanHR - HEART_RATE_RECOVERY_DECREMENT); // Heart rate decreases
-      newRMSSD = Math.min(120, currentRMSSD * HRV_RECOVERY_FACTOR); // HRV improves (recovery)
-      newSDNN = Math.min(150, currentSDNN * HRV_RECOVERY_FACTOR); // HRV improves (recovery)
+
+      // Physiological cold response - heart rate decreases, HRV also decreases due to cold
+      newMeanHR = Math.max(50, currentMeanHR - HEART_RATE_RECOVERY_DECREMENT); // Heart rate decreases
+      newRMSSD = Math.max(10, currentRMSSD * 0.96); // HRV decreases (cold reduces variability)
+      newSDNN = Math.max(15, currentSDNN * 0.97); // HRV decreases (cold reduces variability)
+      newMeanNNI = Math.min(1200, currentMeanNNI * 1.04); // NNI intervals increase (slower heart rate)
+      newPNN50 = Math.max(2, currentPNN50 * 0.93); // pNN50 decreases in cold
+      newTotalPower = Math.max(400, currentTotalPower * 0.92); // Total HRV power decreases
+      newLF = Math.max(100, currentLF * 0.94); // Low frequency power decreases
+      newHF = Math.max(50, currentHF * 0.91); // High frequency power decreases (cold affects parasympathetic)
     }
 
     return {
@@ -146,10 +166,19 @@ export function useSimulation(
       hrv_mean_hr: Math.round(newMeanHR * 10) / 10,
       hrv_rmssd: Math.round(newRMSSD * 10) / 10,
       hrv_sdnn: Math.round(newSDNN * 10) / 10,
+      hrv_mean_nni: Math.round(newMeanNNI),
+      hrv_pnni_50: Math.round(newPNN50 * 10) / 10,
+      hrv_total_power: Math.round(newTotalPower),
+      hrv_lf: Math.round(newLF),
+      hrv_hf: Math.round(newHF),
       // Also update related HRV metrics for realism
       hrv_min_hr: Math.round((newMeanHR - 15) * 10) / 10,
       hrv_max_hr: Math.round((newMeanHR + 25) * 10) / 10,
-      hrv_std_hr: Math.round((newSDNN * 0.3) * 10) / 10
+      hrv_std_hr: Math.round((newSDNN * 0.3) * 10) / 10,
+      hrv_lf_hf_ratio: Math.round((newLF / newHF) * 100) / 100,
+      hrv_median_nni: Math.round(newMeanNNI * 0.98),
+      hrv_range_nni: Math.round(newSDNN * 8),
+      hrv_cvnni: Math.round((newSDNN / newMeanNNI) * 1000) / 1000
     };
   }, []);
 

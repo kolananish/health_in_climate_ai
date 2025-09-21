@@ -5,7 +5,7 @@ import { workerToFeatureArray } from './utils';
 import { FEATURE_NAMES } from './constants';
 
 // API configuration
-const API_BASE_URL = process.env.NEXT_PUBLIC_BACKEND_URL || 'https://a36a70b47eb0.ngrok-free.app';
+const API_BASE_URL = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:3005';
 const API_TIMEOUT = 10000; // 10 seconds
 const MAX_RETRIES = 3;
 const RETRY_DELAY = 1000; // 1 second
@@ -104,10 +104,11 @@ function validatePredictionResponse(response: unknown): response is PredictionRe
 async function makePredictionRequest(worker: Worker): Promise<PredictionResponse> {
   const apiData = workerToAPIFormat(worker);
   
-  const fetchPromise = fetch(`${API_BASE_URL}/predict`, {
+  const fetchPromise = fetch(`${API_BASE_URL}/api/predict`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
+      'ngrok-skip-browser-warning': 'true'
     },
     body: JSON.stringify(apiData),
   });
@@ -210,7 +211,12 @@ export async function predictMultipleWorkers(
 export async function checkAPIHealth(): Promise<boolean> {
   try {
     const response = await Promise.race([
-      fetch(`${API_BASE_URL}/health`, { method: 'GET' }),
+      fetch(`${API_BASE_URL}/api/health`, {
+        method: 'GET',
+        headers: {
+          'ngrok-skip-browser-warning': 'true'
+        }
+      }),
       createTimeoutPromise(5000), // Shorter timeout for health check
     ]);
     return response.ok;
