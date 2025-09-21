@@ -9,8 +9,8 @@ const path = require('path');
 
 // Test configuration
 const TEST_CONFIG = {
-  baseUrl: ' BACKEND_URL',
-  backendUrl: ' BACKEND_URL',
+  baseUrl: 'http://localhost:3000',
+  backendUrl: 'BACKEND_URL',
   timeout: 30000,
   simulationDuration: 10000, // 10 seconds for testing
   colorTolerance: 10, // RGB color tolerance for validation

@@ -4,7 +4,7 @@ const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch
 async function testAPI() {
   try {
     console.log('Testing API health check...');
-    const healthResponse = await fetch(' BACKEND_URL/health', {
+    const healthResponse = await fetch(' http://localhost:8001/health', {
       method: 'GET',
     });
     console.log('Health check status:', healthResponse.status, healthResponse.ok);
@@ -71,7 +71,7 @@ async function testAPI() {
         "Humidity": 50
       };
       
-      const predictionResponse = await fetch(' BACKEND_URL/predict', {
+      const predictionResponse = await fetch(' http://localhost:8001/predict', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
